@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Vulnerability Scanner</h1>
+        <h2>The scan may take up to 15 minutes, please wait.</h2>
+        <form id="scanForm" method="POST">
+            <label for="url">Enter URL to Scan:</label>
+            <input type="text" id="url" name="url" placeholder="Domain.com" required>
+            <button type="submit">Scan</button>
+        </form>
+
+        <!-- Loader element -->
+        <div class="loader" id="loader"></div>
+
+        {% if url %}
+        <div class="result">
+            <h2>Scan Results for {{ url }}:</h2>
+            <p><strong>XSS Vulnerability:</strong> {{ 'Vulnerable' if xss else 'Not Vulnerable' }}</p>
+            <p><strong>SQL Injection Vulnerability:</strong> {{ 'Vulnerable' if sql else 'Not Vulnerable' }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const form = document.getElementById('scanForm');
+        const loader = document.getElementById('loader');
+
+        form.addEventListener('submit', function() {
+            // Show loader
+            loader.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
